@@ -1,7 +1,7 @@
 # ECS Todo App
 
 This Terraform project deploys a simple 'todo' list app from the
-[Docker documentation]() to an ECS Fargate task.  The ECS deployment is load-balanced
+[Docker documentation](https://github.com/docker/getting-started) to an ECS Fargate task.  The ECS deployment is load-balanced
 by an Application Load Balancer to split traffic amongst multiple Fargate tasks
 running the app (config currently set to run 1 task, however).  
 
