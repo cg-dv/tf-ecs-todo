@@ -15,25 +15,6 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
-resource "aws_eip" "nat_eip" {
-  vpc = true
-
-  tags = {
-    Name = "NAT gateway eip"
-  }
-}
-
-resource "aws_nat_gateway" "nat-gw" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public_subnet_1.id
-
-  tags = {
-    Name = "NAT Gateway for mysql container"
-  }
-
-  depends_on = [aws_eip.nat_eip]
-}
-
 resource "aws_route_table" "route_to_internet" {
   vpc_id = aws_vpc.example.id
   route {
@@ -43,18 +24,6 @@ resource "aws_route_table" "route_to_internet" {
 
   tags = {
     Name = "todo-app route to Internet"
-  }
-}
-
-resource "aws_route_table" "route_to_nat" {
-  vpc_id = aws_vpc.example.id
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_nat_gateway.nat-gw.id
-  }
-
-  tags = {
-    Name = "Route to NAT Gateway"
   }
 }
 
@@ -71,21 +40,6 @@ resource "aws_route_table_association" "public_2" {
 resource "aws_route_table_association" "public_3" {
   subnet_id      = aws_subnet.public_subnet_3.id
   route_table_id = aws_route_table.route_to_internet.id
-}
-
-resource "aws_route_table_association" "private_nat_1" {
-  subnet_id      = aws_subnet.private_subnet_1.id
-  route_table_id = aws_route_table.route_to_nat.id
-}
-
-resource "aws_route_table_association" "private_nat_2" {
-  subnet_id      = aws_subnet.private_subnet_2.id
-  route_table_id = aws_route_table.route_to_nat.id
-}
-
-resource "aws_route_table_association" "private_nat_3" {
-  subnet_id      = aws_subnet.private_subnet_3.id
-  route_table_id = aws_route_table.route_to_nat.id
 }
 
 resource "aws_subnet" "public_subnet_1" {
@@ -118,32 +72,3 @@ resource "aws_subnet" "public_subnet_3" {
   }
 }
 
-resource "aws_subnet" "private_subnet_1" {
-  vpc_id               = aws_vpc.example.id
-  cidr_block           = "10.0.4.0/24"
-  availability_zone_id = "use1-az1"
-
-  tags = {
-    Name = "private subnet 1"
-  }
-}
-
-resource "aws_subnet" "private_subnet_2" {
-  vpc_id               = aws_vpc.example.id
-  cidr_block           = "10.0.5.0/24"
-  availability_zone_id = "use1-az2"
-
-  tags = {
-    Name = "private subnet 2"
-  }
-}
-
-resource "aws_subnet" "private_subnet_3" {
-  vpc_id               = aws_vpc.example.id
-  cidr_block           = "10.0.6.0/24"
-  availability_zone_id = "use1-az3"
-
-  tags = {
-    Name = "private subnet 3"
-  }
-}
