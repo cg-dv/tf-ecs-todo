@@ -16,7 +16,7 @@ resource "aws_ecs_task_definition" "todo-app" {
   memory                   = 2048
   execution_role_arn       = data.aws_iam_role.ecs_task_execution_role.arn
   task_role_arn            = "arn:aws:iam::414402433373:role/ECSPermissions-task"
-  depends_on               = [aws_cloudwatch_log_group.docker-logs]
+  depends_on               = [aws_cloudwatch_log_group.tf-ecs-todo-logs]
   container_definitions    = <<TASK_DEFINITION
 [
 		{
@@ -34,7 +34,7 @@ resource "aws_ecs_task_definition" "todo-app" {
             "logConfiguration": {
                 "logDriver": "awslogs",
                 "options": {
-                  "awslogs-group" : "docker-logs",
+                  "awslogs-group" : "tf-ecs-todo-logs",
                   "awslogs-region": "us-east-1",
                   "awslogs-stream-prefix": "demo"
                 }
