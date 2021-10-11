@@ -1,5 +1,5 @@
-resource "aws_cloudwatch_log_group" "docker-logs" {
-  name = "docker-logs"
+resource "aws_cloudwatch_log_group" "tf-ecs-todo-logs" {
+  name = "tf-ecs-todo-logs"
 }
 
 resource "aws_vpc_endpoint" "logs" {
