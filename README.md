@@ -20,7 +20,7 @@ Build infrastructure:
 `terraform apply`
 
 ## Outputs:
-Application Load Balancer URL is the only output fo this configuration.
+Application Load Balancer URL is the only output for this configuration.
 
 (May have to remove 'S" from 'HTTPS' in URL - as SSL/TLS not configured for
 this configuration - additionally, ALB may return 503 error for a minute or two
