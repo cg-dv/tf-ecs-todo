@@ -8,12 +8,15 @@ running the app (config currently set to run 1 task, however).
 This Terraform configuration defines three public subnets
 in which the app can be deployed for the purpose of high availability.
 
+## Diagram
+
+<img src="diagram/AWS-ecs-todo.png?raw=true">
 
 ## Usage:
 
 Initalize Terraform and S3 remote backend:
 
-`init terraform`
+`terraform init`
 
 Build infrastructure:
 
